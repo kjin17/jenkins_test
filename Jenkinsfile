@@ -51,6 +51,7 @@ node {
         sh "git checkout main"
         sh 'echo BUILD:{env.BUILD_NUMBER} >> ./env/dev/build.txt'
         sh 'git add .'
+        sh 'git config --global user.email kjin17@gmail.com'
         sh 'git commit -a -m "updated the image tag"'
         sh 'git push'
         /*
