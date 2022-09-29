@@ -48,33 +48,19 @@ node {
     // kubernetes에 배포하는 stage, 배포할 yaml파일(필자의 경우 test.yaml)은 jenkinsfile과 마찬가지로 git소스 root에 위치시킨다.
     // kubeconfigID에는 앞서 설정한 Kubernetes Credentials를 입력하고 'sh'는 쿠버네티스 클러스터에 원격으로 실행시킬 명령어를 기술한다.
     stage('Kubernetes deploy') {
+        sh "git checkout main"
+        sh 'echo BUILD:{env.BUILD_NUMBER} >> ./env/dev/build.txt'
+        sh 'git add .'
+        sh 'git config --global user.email kjin17@gmail.com'
+        sh 'git commit -a -m "updated the image tag"'
+        sh 'git push -u origin main'
         /*
         sh "git checkout main"
         sh "cd env/dev && /kustomize edit set image kjin17/jenkinstest:${env.BUILD_NUMBER}"
         sh 'git commit -a -m "updated the image tag"'
         sh 'git push'
         */
-        checkout([$class: 'GitSCM',
-                        branches: [[name: '*/main' ]],
-                        extensions: scm.extensions,
-                        userRemoteConfigs: [[
-                            url: 'git@github.com:kjin17/jenkins_test.git',
-                            credentialsId: 'jenkins-ssh-private',
-                        ]]
-                ])
-                sshagent(credentials: ['jenkins-ssh-private']){
-                    sh("""
-                        #!/usr/bin/env bash
-                        set +x
-                        export GIT_SSH_COMMAND="ssh -oStrictHostKeyChecking=no"
-                        git config --global user.email "kjin17@gmail.com"
-                        git checkout main
-                        cd env/dev && kustomize edit set image kjin17/jenkinstest:${BUILD_NUMBER}
-                        git commit -a -m "updated the image tag"
-                        git push
-                    """)
-                }
-            }
+
     }
 
     stage('Complete') {
