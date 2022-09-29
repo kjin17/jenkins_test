@@ -27,7 +27,8 @@ node {
     stage('Push image') {
         script {
             sh "docker login -u kjin17 -p dckr_pat_RpHbYSfSwcXYLMMn2SaozZqSayU https://registry.hub.docker.com"
-            sh "docker push kjin17/jenkinstest:latest"
+            sh "docker tag kjin17/jenkinstest:latest kjin17/jenkinstest:${env.BUILD_NUMBER}"
+            sh "docker push kjin17/jenkinstest:${env.BUILD_NUMBER}"
             
             /*
             docker.withRegistry('https://registry.hub.docker.com', dockerhub-id) {
