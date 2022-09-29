@@ -44,7 +44,7 @@ node {
     stage('Kubernetes deploy') {
         sh "git checkout main"
         sh 'curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash'
-        sh "cd env/dev && kustomize edit set image arm7tdmi/node-hello-world:${env.BUILD_NUMBER}"
+        sh "cd env/dev && /var/jenkins_home/workspace/jenkins_test/kustomize edit set image kjin17/jenkinstest:${env.BUILD_NUMBER}"
         sh 'git commit -a -m "updated the image tag"'
         sh 'git push'
     }
