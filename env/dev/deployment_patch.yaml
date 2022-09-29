@@ -2,21 +2,21 @@
 apiVersion: apps/v1 
 kind: Deployment
 metadata:
-  name: jenkins_test
+  name: jenkins-test
 spec:
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: jenkins_test
+      app: jenkins-test
   replicas: 1 
   template: 
     metadata:
       labels:
-        app: jenkins_test
+        app: jenkins-test
     spec:
       containers:
-      - name: jenkins_test
+      - name: jenkins-test
         image: kjin17/jenkinstest:latest
         ports:
         - containerPort: 80
@@ -24,10 +24,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: jenkins_test
+  name: jenkins-test
   namespace: default
   labels:
-    app: jenkins_test
+    app: jenkins-test
 spec:
   ports:
   - name: http
@@ -35,7 +35,7 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    app: jenkins_test
+    app: jenkins-test
   type: ClusterIP
 ---
 apiVersion: networking.k8s.io/v1
@@ -43,7 +43,7 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: nginx 
-  name: jenkinstest_ingress
+  name: jenkinstest-ingress
   namespace: default
 spec:
   rules:
