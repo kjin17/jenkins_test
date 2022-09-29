@@ -19,7 +19,7 @@ node {
                     env.PATH = "${dockerHome}/bin:${env.PATH}"
                     env.PATH = "/home/jenkins/agent/tools/org.jenkinsci.plugins.docker.commons.tools.DockerTool/docker/bin:${env.PATH}"
                 }
-        appImage = docker.build("kjin17/jenkinstest")
+        appImage = docker.build("kjin17/jenkinstest:${env.BUILD_NUMBER}")
     }
 
     //docker image를 push하는 stage, 필자는 dockerhub에 이미지를 올렸으나 보통 private image repo를 별도 구축해서 사용하는것이 좋음
@@ -27,7 +27,7 @@ node {
     stage('Push image') {
         script {
             sh "docker login -u kjin17 -p dckr_pat_RpHbYSfSwcXYLMMn2SaozZqSayU https://registry.hub.docker.com"
-            sh "docker tag kjin17/jenkinstest:latest kjin17/jenkinstest:${env.BUILD_NUMBER}"
+            // sh "docker tag kjin17/jenkinstest:latest kjin17/jenkinstest:${env.BUILD_NUMBER}"
             sh "docker push kjin17/jenkinstest:${env.BUILD_NUMBER}"
             
             /*
