@@ -26,7 +26,7 @@ node {
     //docker.withRegistry에 dockerhub는 앞서 설정한 dockerhub credentials의 ID이다.
     stage('Push image') {
         script {
-            sh "docker login -u kjin17 -p "
+            sh "docker login -u kjin17 -p dckr_pat_RpHbYSfSwcXYLMMn2SaozZqSayU https://registry.hub.docker.com"
             sh "docker push kjin17/jenkinstest:latest"
             
             /*
