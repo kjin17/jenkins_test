@@ -48,6 +48,7 @@ node {
     // kubernetes에 배포하는 stage, 배포할 yaml파일(필자의 경우 test.yaml)은 jenkinsfile과 마찬가지로 git소스 root에 위치시킨다.
     // kubeconfigID에는 앞서 설정한 Kubernetes Credentials를 입력하고 'sh'는 쿠버네티스 클러스터에 원격으로 실행시킬 명령어를 기술한다.
     stage('Kubernetes deploy') {
+        sh 'kustomize'
         sh "cd env/dev && / sed -i 's/kjin17/jenkinsfile:./kjin17/jenkinsfile:{env.BUILD_NUMBER}/g' kustomization.yaml"
         sh 'git commit -a -m "updated the image tag"'
         sh 'git push'
