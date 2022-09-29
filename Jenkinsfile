@@ -1,6 +1,6 @@
 /* pipeline 변수 설정 */
-def app
-
+def appImage
+def dockerhub-id = "dockerhub-id"
 node {
     // gitlab으로부터 소스 다운하는 stage
     stage('Checkout') {
@@ -27,14 +27,11 @@ node {
     //docker.withRegistry에 dockerhub는 앞서 설정한 dockerhub credentials의 ID이다.
     stage('Push image') {
         script {
-            sh "docker login -u kjin17 -p ${env.dockerhub-id}"
-            sh "doccker push kjin17/jenkinstest:latest"
-            /*
             docker.withRegistry('https://registry.hub.docker.com', dockerhub-id) {
                 appImage.push("${env.BUILD_NUMBER}")
                 appImage.push("latest")
             }
-            */
+        
         }
     }
 
