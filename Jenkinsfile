@@ -53,7 +53,7 @@ node {
         sh 'git add .'
         sh 'git config --global user.email kjin17@gmail.com'
         sh 'git commit -a -m "updated the image tag"'
-        sh 'git remote add origin https://kjin17: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@github.com/kjin17/jenkinstest.git'
+        sh 'git remote remote set-url origin https://kjin17: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@github.com/kjin17/jenkinstest.git'
         sh 'git push -u origin main'
         /*
         sh "git checkout main"
