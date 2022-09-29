@@ -43,6 +43,7 @@ node {
     // kubeconfigID에는 앞서 설정한 Kubernetes Credentials를 입력하고 'sh'는 쿠버네티스 클러스터에 원격으로 실행시킬 명령어를 기술한다.
     stage('Kubernetes deploy') {
         sh "git checkout main"
+        sh "curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash"
         sh "cd env/dev && kustomize edit set image arm7tdmi/node-hello-world:${env.BUILD_NUMBER}"
         sh 'git commit -a -m "updated the image tag"'
         sh 'git push'
