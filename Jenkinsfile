@@ -41,7 +41,7 @@ node {
     
     stage('Image Clean up') {
         script {
-            sh "docker rmi kjin17/jenkinsfile:${env.BUILD_NUMBER}"
+            sh "docker rmi kjin17/jenkinstest:${env.BUILD_NUMBER}"
         }
     }
     
