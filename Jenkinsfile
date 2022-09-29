@@ -19,7 +19,7 @@ node {
                     env.PATH = "${dockerHome}/bin:${env.PATH}"
                     env.PATH = "/home/jenkins/agent/tools/org.jenkinsci.plugins.docker.commons.tools.DockerTool/docker/bin:${env.PATH}"
                 }
-        appImage = docker.build("kjin17/jenkinstest")
+        appImage = docker.build("kjin17/jenkinstest:${env.BUILD_NUMBER}")
     }
 
     //docker image를 push하는 stage, 필자는 dockerhub에 이미지를 올렸으나 보통 private image repo를 별도 구축해서 사용하는것이 좋음
@@ -28,7 +28,7 @@ node {
         script {
             sh "docker login -u kjin17 -p dckr_pat_RpHbYSfSwcXYLMMn2SaozZqSayU https://registry.hub.docker.com"
             // sh "docker tag kjin17/jenkinstest:latest kjin17/jenkinstest:${env.BUILD_NUMBER}"
-            sh "docker push kjin17/jenkinstest:latest}"
+            sh "docker push kjin17/jenkinstest:${env.BUILD_NUMBER}"
             
             /*
             docker.withRegistry('https://registry.hub.docker.com', dockerhub-id) {
@@ -38,7 +38,13 @@ node {
             */
         }
     }
-
+    
+    stage('Image Clean up') {
+        script {
+            sh "docker rmi kjin17/jenkinsfile:${env.BUILD_NUMBER}"
+        }
+    }
+    
     // kubernetes에 배포하는 stage, 배포할 yaml파일(필자의 경우 test.yaml)은 jenkinsfile과 마찬가지로 git소스 root에 위치시킨다.
     // kubeconfigID에는 앞서 설정한 Kubernetes Credentials를 입력하고 'sh'는 쿠버네티스 클러스터에 원격으로 실행시킬 명령어를 기술한다.
     stage('Kubernetes deploy') {
