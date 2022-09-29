@@ -26,7 +26,7 @@ node {
     //docker image를 push하는 stage, 필자는 dockerhub에 이미지를 올렸으나 보통 private image repo를 별도 구축해서 사용하는것이 좋음
     //docker.withRegistry에 dockerhub는 앞서 설정한 dockerhub credentials의 ID이다.
     stage('Push image') {
-        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-id') {
+        docker.withRegistry('https://registry.hub.docker.com', dockerhub-id) {
             appImage.push("${env.BUILD_NUMBER}")
             appImage.push("latest")
         }
