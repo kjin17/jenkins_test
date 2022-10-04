@@ -20,7 +20,7 @@ spec:
         image: kjin17/jenkinstest:latest
         ports:
         - containerPort: 80
-     imagePullPolicy: Always
+      imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service
