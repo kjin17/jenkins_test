@@ -54,7 +54,7 @@ spec:
           service:
             name: jenkins-test
             port:
-              name: http
+              number: 80
         path: /
         pathType: Prefix
 status:
