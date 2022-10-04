@@ -52,7 +52,7 @@ spec:
       paths:
       - backend:
           service:
-            name: jenkinstest
+            name: jenkins-test
             port:
               name: http
         path: /
