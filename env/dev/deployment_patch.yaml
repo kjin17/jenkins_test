@@ -30,14 +30,13 @@ metadata:
     app: jenkins-test
 spec:
   ports:
-  # - name: http
-  - nodePort: 30232  
+  - name: http 
     port: 80
     protocol: TCP
     targetPort: 80
   selector:
     app: jenkins-test
-  type: LoadBalancer
+  type: ClusterIP
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
