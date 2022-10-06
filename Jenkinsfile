@@ -69,7 +69,7 @@ node {
                 git add env/dev/deployment_patch.yaml
                 git status
                 git commit -m "update the image tag"
-                git push orgin HEAD:main
+                git push origin HEAD:main
             """)
         }
         
