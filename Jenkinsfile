@@ -27,8 +27,8 @@ node {
     stage('Push image') {
         script {
             sh "docker login -u kjin17 -p dckr_pat_RpHbYSfSwcXYLMMn2SaozZqSayU https://registry.hub.docker.com"
-            // sh "docker tag kjin17/jenkinstest:latest kjin17/jenkinstest:${env.BUILD_NUMBER}"
-            sh "docker push kjin17/jenkinstest:latest"
+            sh "docker tag kjin17/jenkinstest:latest kjin17/jenkinstest:${env.BUILD_NUMBER}"
+            // sh "docker push kjin17/jenkinstest:latest"
             
             /*
             docker.withRegistry('https://registry.hub.docker.com', dockerhub-id) {
@@ -48,7 +48,8 @@ node {
     // kubernetes에 배포하는 stage, 배포할 yaml파일(필자의 경우 test.yaml)은 jenkinsfile과 마찬가지로 git소스 root에 위치시킨다.
     // kubeconfigID에는 앞서 설정한 Kubernetes Credentials를 입력하고 'sh'는 쿠버네티스 클러스터에 원격으로 실행시킬 명령어를 기술한다.
     stage('Kubernetes deploy') {
-        /*
+        //
+        
         sh("""
            #!/usr/bin/env bash
            git config --global user.name "kjin17"
@@ -57,21 +58,22 @@ node {
         """)
         
         script {
-            previousTAG = sh(script: 'echo `expr ${BUIKD_NUMBER} -1`', returnStdout: true).trim()
+            previousTAG = sh(script: 'echo `expr ${env.BUILD_NUMBER} -1`', returnStdout: true).trim()
         }
         
         withCredentials(usernamePassword(credentialsId: 'github-id', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
             sh("""
                 git config --local credential.helper "!f() { echo username=\\$GIT_USERNAME; echo password=\\$GIT_PASSWORD; }; f"
                 echo ${previousTAG}
-                sed -i 's/jenkinstest:${previousTAG}/jenkinstest:${BUILD_NUMBER}/g' env/dev/deployment_patch.yaml
+                sed -i 's/jenkinstest:${previousTAG}/jenkinstest:${env.BUILD_NUMBER}/g' env/dev/deployment_patch.yaml
                 git add env/dev/deployment_patch.yaml
                 git status
                 git commit -m "update the image tag"
                 git push orgin HEAD:main
             """)
         }
-        */
+        
+        //
     }
 
     stage('Complete') {
