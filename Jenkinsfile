@@ -61,7 +61,7 @@ node {
             previousTAG = sh(script: 'echo `expr ${env.BUILD_NUMBER} -1`', returnStdout: true).trim()
         }
         
-        withCredentials(usernamePassword(credentialsId: 'github-id', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+        withCredentials([usernamePassword(credentialsId: 'github-id', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
             sh("""
                 git config --local credential.helper "!f() { echo username=\\$GIT_USERNAME; echo password=\\$GIT_PASSWORD; }; f"
                 echo ${previousTAG}
