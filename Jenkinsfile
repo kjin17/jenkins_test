@@ -49,10 +49,28 @@ node {
     // kubeconfigID에는 앞서 설정한 Kubernetes Credentials를 입력하고 'sh'는 쿠버네티스 클러스터에 원격으로 실행시킬 명령어를 기술한다.
     stage('Kubernetes deploy') {
         /*
-        sh "git checkout main"
-        sh "cd env/dev && /kustomize edit set image kjin17/jenkinstest:${env.BUILD_NUMBER}"
-        sh 'git commit -a -m "updated the image tag"'
-        sh 'git push'
+        sh("""
+           #!/usr/bin/env bash
+           git config --global user.name "kjin17"
+           git config --global user.email "kjin17@gmail.com"
+           git checkout -B main
+        """)
+        
+        script {
+            previousTAG = sh(script: 'echo `expr ${BUIKD_NUMBER} -1`', returnStdout: true).trim()
+        }
+        
+        withCredentials(usernamePassword(credentialsId: 'github-id', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+            sh("""
+                git config --local credential.helper "!f() { echo username=\\$GIT_USERNAME; echo password=\\$GIT_PASSWORD; }; f"
+                echo ${previousTAG}
+                sed -i 's/jenkinstest:${previousTAG}/jenkinstest:${BUILD_NUMBER}/g' env/dev/deployment.yaml
+                git add env/dev/deployment.yaml
+                git status
+                git commit -m "update the image tag"
+                git push orgin HEAD:main
+            """)
+        }
         */
     }
 
