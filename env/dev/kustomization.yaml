@@ -1,6 +1,9 @@
+patchesStrategicMerge:
+- deployment_patch.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
 resources:
-  - deployment_patch.yaml
+  - ../../base
 images:
-  - name: jenkins-test
-    newName: kjin17/jenkinstest
+  - name: kjin17/jenkinstest
     newTag: "3"
