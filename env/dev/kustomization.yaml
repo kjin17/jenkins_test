@@ -1,6 +1,6 @@
 resources:
   - deployment_patch.yaml
 images:
-  - name: jenkinstest
+  - name: jenkins-test
     newName: kjin17/jenkinstest
     newTag: 1
