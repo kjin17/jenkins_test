@@ -83,7 +83,7 @@ node {
                 slackSend (
                     channel: 'jenkins',          
                     color: '#2C953C',       
-                    message: 'SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})
+                    message: 'SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}] (${env.BUILD_URL})'
                 )
             }
             failure {
