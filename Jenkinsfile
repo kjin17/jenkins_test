@@ -78,5 +78,21 @@ node {
 
     stage('Complete') {
         sh "echo 'The end'"
+        post  {
+            success {
+                slackSend (
+                    channel: 'jenkins',           # e.g) #slack-chennel'
+                    color: '#2C953C'         # e.g) #00ff00
+                    message: 'SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})'' # e.g) SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})
+                )
+            }
+            failure {
+                slackSend (
+                    channel: 'jenkins',
+                    color: '#FF3232'
+                    message: 'FAIL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})''
+                )
+            }
+        }
     }
 }
