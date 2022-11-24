@@ -48,13 +48,13 @@ metadata:
 spec:
   rules:
   - host: jenkinstest.localhost
-    http:
+    https:
       paths:
       - backend:
           service:
             name: jenkins-test
             port:
-              number: 443
+              number: 80
         path: /
         pathType: Prefix
 status:
