@@ -19,7 +19,7 @@ spec:
       - name: jenkins-test
         image: kjin17/jenkinstest:latest
         ports:
-        - containerPort: 443
+        - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -34,10 +34,6 @@ spec:
     port: 80
     protocol: TCP
     targetPort: 80
-  - name: https
-    port: 443
-    protocol: TCP
-    targetPort: 443
   selector:
     app: jenkins-test
   type: ClusterIP
@@ -52,13 +48,13 @@ metadata:
 spec:
   rules:
   - host: jenkinstest.localhost
-    https:
+    http:
       paths:
       - backend:
           service:
             name: jenkins-test
             port:
-              number: 443
+              number: 80
         path: /
         pathType: Prefix
 status:
