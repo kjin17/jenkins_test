@@ -64,9 +64,10 @@ node {
         withCredentials([usernamePassword(credentialsId: 'github-id', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
             sh("""
                 git config --local credential.helper "!f() { echo username=\\$GIT_USERNAME; echo password=\\$GIT_PASSWORD; }; f"
-                echo ${previousTAG}
+                // echo ${previousTAG}
                 // sed -i 's/jenkinstest:${previousTAG}/jenkinstest:${env.BUILD_NUMBER}/g' env/dev/deployment_patch.yaml
-                sed -i 's/newTag:${previousTAG}/newTag:${env.BUILD_NUMBER}/g' env/dev/kustomization.yml
+                // add new line
+                cd env/dev && kustomize edit set image kjin17/jenkinstest:${BUILD_NUMBER}
                 git add env/dev/kustomization.yml
                 git status
                 git commit -m "update the image tag"
