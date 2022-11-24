@@ -65,8 +65,9 @@ node {
             sh("""
                 git config --local credential.helper "!f() { echo username=\\$GIT_USERNAME; echo password=\\$GIT_PASSWORD; }; f"
                 echo ${previousTAG}
-                sed -i 's/jenkinstest:${previousTAG}/jenkinstest:${env.BUILD_NUMBER}/g' env/dev/deployment_patch.yaml
-                git add env/dev/deployment_patch.yaml
+                // sed -i 's/jenkinstest:${previousTAG}/jenkinstest:${env.BUILD_NUMBER}/g' env/dev/deployment_patch.yaml
+                sed -i 's/newTag:${previousTAG}/newTag:${env.BUILD_NUMBER}/g' env/dev/kustomization.yml
+                git add env/dev/kustomization.yml
                 git status
                 git commit -m "update the image tag"
                 git push origin HEAD:main
