@@ -3,4 +3,4 @@ resources:
 images:
   - name: jenkins-test
     newName: kjin17/jenkinstest
-    newTag: 1
+    newTag: "3"
