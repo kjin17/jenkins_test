@@ -3,7 +3,7 @@ patchesStrategicMerge:
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../base
+  - deployment_patch.yaml
 images:
   - name: kjin17/jenkinstest
     newTag: "3"
