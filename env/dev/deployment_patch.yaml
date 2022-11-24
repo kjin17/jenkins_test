@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: jenkins-test
-        image: kjin17/jenkinstest:3
+        image: kjin17/jenkinstest:latest
         ports:
         - containerPort: 80
 ---
