@@ -6,4 +6,4 @@ resources:
   - deployment_patch.yaml
 images:
   - name: kjin17/jenkinstest
-    newTag: "11"
+    newTag: "12"
