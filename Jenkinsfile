@@ -6,7 +6,7 @@ def notifySlack(STATUS, COLOR) {
 	color: COLOR, tokenCredentialId: 'slack_jenkins', 
 	teamDomain: 'parkkj'
 
-
+}
 /* pipeline 변수 설정 */
 def appImage
 node {
