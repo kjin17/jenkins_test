@@ -76,5 +76,5 @@ node {
   catch(e) {
     	// 빌드 실패시
         notifySlack("FAILED", "#FF0000")
-	}
+  }
 }
