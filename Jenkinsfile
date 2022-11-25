@@ -78,20 +78,14 @@ node {
 
     stage('Complete') {
         sh "echo 'The end'"
-        post  {
-            success {
-                slackSend (
-                    channel: 'jenkins',          
-                    color: '#2C953C',       
-                    message: 'SUCCESSFUL: Job'
-            }
-            failure {
-                slackSend (
-                    channel: 'jenkins',
-                    color: '#FF3232',
-                    message: 'FAILED: Job'
-                )
-            }
-        }
+        post {
+    success {
+         slackSend (channel: SLACK_CHANNEL, color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})", teamDomain: TEAM_DOMAIN, tokenCredentialId: TOKEN_CREDENTIAL_ID )
+         }
+
+    failure {
+         slackSend (channel: SLACK_CHANNEL, color: '#F01717', message: "FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})", teamDomain: TEAM_DOMAIN, tokenCredentialId: TOKEN_CREDENTIAL_ID )
+         }
+    }
     }
 }
