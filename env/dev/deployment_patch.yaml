@@ -59,7 +59,7 @@ spec:
           service:
             name: jenkins-test
             port:
-              number: 443
+              number: 80
         path: /
         pathType: Prefix
 status:
